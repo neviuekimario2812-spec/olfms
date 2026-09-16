@@ -1,0 +1,12 @@
+/* Guide layout */
+.guide-nav {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    background: var(--white);
+    padding: 14px 18px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+.guide-nav a { font-weight: 600; }
+#clients, #lawyers, #managers, #security, #faq { scroll-margin-top: 90px; }

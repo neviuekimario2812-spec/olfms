@@ -1,0 +1,3 @@
+/* Dashboard layout tweaks */
+.stat-card { border-top: 3px solid var(--gold); }
+h1 { margin-bottom: 4px; }

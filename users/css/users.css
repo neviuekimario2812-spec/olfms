@@ -1,0 +1,11 @@
+/* Users layout */
+.inline-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.pagination { display: flex; gap: 6px; flex-wrap: wrap; }
+.pagination a {
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--ink);
+}
+.pagination a.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+code { background: var(--bg); padding: 2px 6px; border-radius: 4px; }

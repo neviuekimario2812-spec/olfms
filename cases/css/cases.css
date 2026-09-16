@@ -1,0 +1,10 @@
+/* Cases layout */
+.page-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.assign-form { display: flex; gap: 8px; align-items: center; }
+textarea { resize: vertical; min-height: 120px; }

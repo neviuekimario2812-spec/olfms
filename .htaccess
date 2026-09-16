@@ -1,0 +1,16 @@
+# OLFMS — baseline hardening for Apache/mod_php deployments.
+
+# Never list directory contents.
+Options -Indexes
+
+# Basic security headers (in addition to app-level headers).
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Block access to dotfiles (.env, .git, etc.) and this file itself.
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
