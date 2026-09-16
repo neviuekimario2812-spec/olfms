@@ -37,9 +37,6 @@ if ($role === 'client') {
     $stats['Assigned Cases'] = array_sum($byStatus);
     $stats['In Progress'] = $byStatus['in_progress'] ?? 0;
     $stats['Closed'] = $byStatus['closed'] ?? 0;
-
-    $pendingAppt = $pdo->prepare("SELECT COUNT(*) FROM appointments WHERE lawyer_id=? AND status='pending'");
-    $pendingAppt->execute([$user['user_id']]);
     $stats['Pending Appointments'] = (int) $pendingAppt->fetchColumn();
 
     $recentCases = $pdo->prepare('SELECT c.*, u.full_name AS client_name FROM cases c JOIN users u ON c.client_id=u.user_id WHERE c.lawyer_id=? ORDER BY c.updated_at DESC LIMIT 5');
