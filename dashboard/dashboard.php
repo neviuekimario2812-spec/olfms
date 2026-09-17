@@ -37,6 +37,8 @@ if ($role === 'client') {
     $stats['Assigned Cases'] = array_sum($byStatus);
     $stats['In Progress'] = $byStatus['in_progress'] ?? 0;
     $stats['Closed'] = $byStatus['closed'] ?? 0;
+    $pendingAppt = $pdo->prepare('SELECT COUNT(*) FROM appointments WHERE lawyer_id=? AND status=?');
+    $pendingAppt->execute([$user['user_id'], 'pending']);
     $stats['Pending Appointments'] = (int) $pendingAppt->fetchColumn();
 
     $recentCases = $pdo->prepare('SELECT c.*, u.full_name AS client_name FROM cases c JOIN users u ON c.client_id=u.user_id WHERE c.lawyer_id=? ORDER BY c.updated_at DESC LIMIT 5');
@@ -61,7 +63,7 @@ if ($role === 'client') {
 }
 
 $pageTitle = ucfirst($role) . ' Dashboard';
-$pageCss = '/dashboard/css/dashboard.css';
+$pageCss = '/olfms/dashboard/css/dashboard.css';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="container">
@@ -90,10 +92,10 @@ require_once __DIR__ . '/../includes/header.php';
                         <td><?php echo e($c['category']); ?></td>
                         <td><span class="badge badge-<?php echo e($c['status']); ?>"><?php echo e(str_replace('_',' ',$c['status'])); ?></span></td>
                         <td><?php echo e(date('d M Y', strtotime($c['created_at']))); ?></td>
-                        <td><a href="/cases/view_case.php?id=<?php echo (int)$c['case_id']; ?>">View</a></td>
+                        <td><a href="/olfms/cases/view_case.php?id=<?php echo (int)$c['case_id']; ?>">View</a></td>
                     </tr>
                 <?php endforeach; ?>
-                <?php if (!$recentCases): ?><tr><td colspan="5" class="muted">No cases yet. <a href="/cases/submit_case.php">Submit one</a>.</td></tr><?php endif; ?>
+                <?php if (!$recentCases): ?><tr><td colspan="5" class="muted">No cases yet. <a href="/olfms/cases/submit_case.php">Submit one</a>.</td></tr><?php endif; ?>
                 </tbody>
             </table>
             </div>
@@ -132,7 +134,7 @@ require_once __DIR__ . '/../includes/header.php';
                         <td><?php echo e($c['title']); ?></td>
                         <td><span class="badge badge-<?php echo e($c['status']); ?>"><?php echo e(str_replace('_',' ',$c['status'])); ?></span></td>
                         <td><?php echo e(date('d M Y', strtotime($c['updated_at']))); ?></td>
-                        <td><a href="/cases/view_case.php?id=<?php echo (int)$c['case_id']; ?>">View</a></td>
+                        <td><a href="/olfms/cases/view_case.php?id=<?php echo (int)$c['case_id']; ?>">View</a></td>
                     </tr>
                 <?php endforeach; ?>
                 <?php if (!$recentCases): ?><tr><td colspan="5" class="muted">No cases assigned to you yet.</td></tr><?php endif; ?>
@@ -154,7 +156,7 @@ require_once __DIR__ . '/../includes/header.php';
                         <td><?php echo e($c['title']); ?></td>
                         <td><span class="badge badge-<?php echo e($c['status']); ?>"><?php echo e(str_replace('_',' ',$c['status'])); ?></span></td>
                         <td><?php echo e(date('d M Y', strtotime($c['created_at']))); ?></td>
-                        <td><a href="/cases/manage_cases.php?id=<?php echo (int)$c['case_id']; ?>">Review</a></td>
+                        <td><a href="/olfms/cases/manage_cases.php?id=<?php echo (int)$c['case_id']; ?>">Review</a></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
@@ -180,7 +182,7 @@ require_once __DIR__ . '/../includes/header.php';
                 </tbody>
             </table>
             </div>
-            <p class="mt-2"><a href="/users/audit_log.php">View full audit log &rarr;</a></p>
+            <p class="mt-2"><a href="/olfms/users/audit_log.php">View full audit log &rarr;</a></p>
         </div>
     <?php endif; ?>
 </div>
