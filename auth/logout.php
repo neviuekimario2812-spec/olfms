@@ -13,4 +13,4 @@ if (ini_get('session.use_cookies')) {
 }
 session_destroy();
 
-redirect('/auth/login.php');
+redirect(BASE_URL . '/auth/login.php');

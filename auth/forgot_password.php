@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Simulated email delivery: in production this URL is sent via the
             // email service, never rendered in the HTTP response.
-            $devLink = '/auth/reset_password.php?token=' . $rawToken;
+            $devLink = BASE_URL . '/auth/reset_password.php?token=' . $rawToken;
         }
 
         $message = 'If an account exists for that email, a password reset link has been sent and will expire in '
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $pageTitle = 'Forgot Password';
-$pageCss = '/auth/css/auth.css';
+$pageCss = BASE_URL . '/auth/css/auth.css';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="container form-narrow">
@@ -62,7 +62,7 @@ require_once __DIR__ . '/../includes/header.php';
             </div>
             <button type="submit" class="btn btn-block">Send reset link</button>
         </form>
-        <p class="text-center mt-2"><a href="/auth/login.php">Back to login</a></p>
+        <p class="text-center mt-2"><a href="<?= e(BASE_URL) ?>/auth/login.php">Back to login</a></p>
     </div>
 </div>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

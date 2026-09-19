@@ -21,7 +21,7 @@ $logs = $stmt->fetchAll();
 $totalPages = max(1, (int) ceil($total / $perPage));
 
 $pageTitle = 'Audit Log';
-$pageCss = '/users/css/users.css';
+$pageCss = BASE_URL . '/users/css/users.css';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="container">

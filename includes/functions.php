@@ -81,14 +81,15 @@ function is_logged_in(): bool
 function require_login(): void
 {
     if (!is_logged_in()) {
-        redirect('/auth/login.php');
+        redirect(BASE_URL . '/auth/login.php');
     }
 }
 
 /** Restricts a page to one or more roles: require_role(['admin','manager']) */
-function require_role(array $roles): void
+function require_role(array|string $roles): void
 {
     require_login();
+    $roles = (array) $roles;
     if (!in_array(current_user()['role'], $roles, true)) {
         http_response_code(403);
         die('<h2>403 — Access denied</h2><p>Your role does not permit this action.</p>');

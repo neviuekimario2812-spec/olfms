@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $pageTitle = 'Register Lawyer';
-$pageCss = '/users/css/users.css';
+$pageCss = BASE_URL . '/users/css/users.css';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="container form-narrow">

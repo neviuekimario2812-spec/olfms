@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && in_array($user['role'], ['lawyer','
             $upd = $pdo->prepare('UPDATE cases SET status = ? WHERE case_id = ?');
             $upd->execute([$newStatus, $caseId]);
             log_audit($user['user_id'], 'case_status_update', 'success', "Case #$caseId -> $newStatus");
-            redirect('/cases/view_case.php?id=' . $caseId);
+            redirect(BASE_URL . '/cases/view_case.php?id=' . $caseId);
         }
     }
 }
@@ -50,7 +50,7 @@ $files->execute([$caseId]);
 $files = $files->fetchAll();
 
 $pageTitle = 'Case: ' . $case['title'];
-$pageCss = '/cases/css/cases.css';
+$pageCss = BASE_URL . '/cases/css/cases.css';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="container">
@@ -90,7 +90,7 @@ require_once __DIR__ . '/../includes/header.php';
     <div class="card mt-3">
         <div class="page-head">
             <h2>Case Files</h2>
-            <a href="/files/upload.php?case_id=<?php echo (int)$case['case_id']; ?>" class="btn btn-sm btn-gold">Upload file</a>
+            <a href="<?= e(BASE_URL) ?>/files/upload.php?case_id=<?php echo (int)$case['case_id']; ?>" class="btn btn-sm btn-gold">Upload file</a>
         </div>
         <div class="table-wrap mt-2">
             <table>
@@ -102,7 +102,7 @@ require_once __DIR__ . '/../includes/header.php';
                         <td><?php echo e(str_replace('_',' ',$f['category'])); ?></td>
                         <td><?php echo e(round($f['file_size']/1024)); ?> KB</td>
                         <td><?php echo e(date('d M Y', strtotime($f['uploaded_at']))); ?></td>
-                        <td><a href="/files/download.php?id=<?php echo (int)$f['file_id']; ?>">Download</a></td>
+                        <td><a href="<?= e(BASE_URL) ?>/files/download.php?id=<?php echo (int)$f['file_id']; ?>">Download</a></td>
                     </tr>
                 <?php endforeach; ?>
                 <?php if (!$files): ?><tr><td colspan="5" class="muted">No files uploaded yet.</td></tr><?php endif; ?>

@@ -47,7 +47,7 @@ if ($user['role'] === 'lawyer') {
 $appointments = $stmt->fetchAll();
 
 $pageTitle = 'Appointments';
-$pageCss = '/appointments/css/appointments.css';
+$pageCss = BASE_URL . '/appointments/css/appointments.css';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="container">

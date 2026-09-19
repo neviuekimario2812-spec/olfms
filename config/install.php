@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ONE-TIME SETUP SCRIPT
  * Creates the first "admin" account using PHP's own password_hash() so the
@@ -40,37 +41,84 @@ if ($adminCount > 0) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>OLFMS Setup</title>
-<style>
-    body{font-family:Arial,sans-serif;background:#F5F5F7;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;}
-    .box{background:#fff;padding:32px;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.1);max-width:420px;width:100%;}
-    h1{font-size:20px;color:#0D47A1;}
-    input{width:100%;padding:10px;margin:6px 0 14px;border:1px solid #E5E5EA;border-radius:6px;box-sizing:border-box;}
-    button{background:#0D47A1;color:#fff;border:none;padding:10px 18px;border-radius:6px;cursor:pointer;width:100%;}
-    .error{color:#C62828;margin-bottom:10px;}
-    .ok{color:#1B5E20;}
-</style>
+    <meta charset="UTF-8">
+    <title>OLFMS Setup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #F5F5F7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .box {
+            background: #fff;
+            padding: 32px;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, .1);
+            max-width: 420px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 20px;
+            color: #0D47A1;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0 14px;
+            border: 1px solid #E5E5EA;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #0D47A1;
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .error {
+            color: #C62828;
+            margin-bottom: 10px;
+        }
+
+        .ok {
+            color: #1B5E20;
+        }
+    </style>
 </head>
+
 <body>
-<div class="box">
-<h1><?php echo APP_NAME; ?> — First-time setup</h1>
-<?php if ($done): ?>
-    <p class="ok">An administrator account already exists. Setup is locked.</p>
-    <p><a href="../auth/login.php">Go to login</a></p>
-<?php else: ?>
-    <?php if ($error): ?><p class="error"><?php echo htmlspecialchars($error); ?></p><?php endif; ?>
-    <form method="post">
-        <label>Full name</label>
-        <input type="text" name="full_name" required>
-        <label>Email</label>
-        <input type="email" name="email" required>
-        <label>Password</label>
-        <input type="password" name="password" required>
-        <button type="submit">Create administrator</button>
-    </form>
-<?php endif; ?>
-</div>
+    <div class="box">
+        <h1><?php echo APP_NAME; ?> — First-time setup</h1>
+        <?php if ($done): ?>
+            <p class="ok">An administrator account already exists. Setup is locked.</p>
+            <p><a href="../auth/login.php">Go to login</a></p>
+        <?php else: ?>
+            <?php if ($error): ?><p class="error"><?php echo htmlspecialchars($error); ?></p><?php endif; ?>
+            <form method="post">
+                <label>Full name</label>
+                <input type="text" name="full_name" required>
+                <label>Email</label>
+                <input type="email" name="email" required>
+                <label>Password</label>
+                <input type="password" name="password" required>
+                <button type="submit">Create administrator</button>
+            </form>
+        <?php endif; ?>
+    </div>
 </body>
+
 </html>

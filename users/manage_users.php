@@ -14,7 +14,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $targetId = (int) ($_POST['user_id'] ?? 0);
         $action = clean($_POST['action'] ?? '');
 
-        if ($targetId === (int) $admin['user_id']) {
+        if ($action === 'create_manager') {
+            $fullName = clean($_POST['full_name'] ?? '');
+            $email = clean($_POST['email'] ?? '');
+            $password = $_POST['password'] ?? '';
+
+            if ($fullName === '' || !valid_email($email) || !password_meets_policy($password)) {
+                $message = 'Enter a name, valid email, and password meeting the password policy.';
+            } else {
+                $check = $pdo->prepare('SELECT user_id FROM users WHERE email = ?');
+                $check->execute([$email]);
+                if ($check->fetch()) {
+                    $message = 'A user with this email already exists.';
+                } else {
+                    $roleId = $pdo->query("SELECT role_id FROM roles WHERE role_name = 'manager'")->fetchColumn();
+                    $stmt = $pdo->prepare(
+                        'INSERT INTO users (full_name, email, password_hash, role_id) VALUES (?,?,?,?)'
+                    );
+                    $stmt->execute([$fullName, $email, password_hash($password, PASSWORD_BCRYPT), $roleId]);
+                    log_audit($admin['user_id'], 'manager_register', 'success', $email);
+                    $message = 'Manager account created successfully.';
+                }
+            }
+        } elseif ($targetId === (int) $admin['user_id']) {
             $message = 'You cannot modify your own account from this page.';
         } elseif ($action === 'toggle_active') {
             $pdo->prepare('UPDATE users SET is_active = 1 - is_active WHERE user_id = ?')->execute([$targetId]);
@@ -44,12 +66,23 @@ $users = $pdo->query(
 $roles = $pdo->query('SELECT role_name FROM roles')->fetchAll(PDO::FETCH_COLUMN);
 
 $pageTitle = 'Manage Users';
-$pageCss = '/users/css/users.css';
+$pageCss = BASE_URL . '/users/css/users.css';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="container">
     <h1>Manage Users &amp; Roles</h1>
     <?php if ($message): ?><div class="alert alert-info"><?php echo e($message); ?></div><?php endif; ?>
+    <div class="card">
+        <h2>Create manager account</h2>
+        <form method="post" class="grid grid-2">
+            <?php echo csrf_field(); ?>
+            <input type="hidden" name="action" value="create_manager">
+            <div class="form-group"><label for="full_name">Full name</label><input id="full_name" name="full_name" required></div>
+            <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
+            <div class="form-group"><label for="password">Password</label><input type="password" id="password" name="password" required></div>
+            <div class="form-group"><button type="submit" class="btn">Create manager</button></div>
+        </form>
+    </div>
     <div class="table-wrap mt-2">
         <table>
             <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Failed logins</th><th>Actions</th></tr></thead>

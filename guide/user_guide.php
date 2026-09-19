@@ -4,7 +4,7 @@ require_once __DIR__ . '/../includes/functions.php';
 // Accessible to everyone, logged in or not — functional requirement.
 
 $pageTitle = 'User Guide';
-$pageCss = '/guide/css/guide.css';
+$pageCss = BASE_URL . '/guide/css/guide.css';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="container">

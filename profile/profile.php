@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $pageTitle = 'My Profile';
-$pageCss = '/profile/css/profile.css';
+$pageCss = BASE_URL . '/profile/css/profile.css';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="container form-narrow">

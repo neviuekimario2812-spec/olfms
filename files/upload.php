@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $pageTitle = 'Upload Document';
-$pageCss = '/files/css/files.css';
+$pageCss = BASE_URL . '/files/css/files.css';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="container form-narrow">
@@ -61,7 +61,7 @@ require_once __DIR__ . '/../includes/header.php';
         <p class="muted">Only PDF and PNG files up to 10MB are accepted.</p>
         <?php if ($success): ?>
             <div class="alert alert-success">File uploaded successfully.</div>
-            <?php if ($caseId): ?><p><a href="/cases/view_case.php?id=<?php echo $caseId; ?>">&larr; Back to case</a></p><?php endif; ?>
+            <?php if ($caseId): ?><p><a href="<?= e(BASE_URL) ?>/cases/view_case.php?id=<?php echo $caseId; ?>">&larr; Back to case</a></p><?php endif; ?>
         <?php else: ?>
             <?php foreach ($errors as $err): ?><div class="alert alert-error"><?php echo e($err); ?></div><?php endforeach; ?>
             <form method="post" enctype="multipart/form-data" novalidate>

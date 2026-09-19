@@ -2,8 +2,18 @@
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 
+function dashboard_for_role(int $roleId): string
+{
+    return [
+        1 => BASE_URL . '/layouts/admin/dashboard.php',
+        2 => BASE_URL . '/layouts/manager/dashboard.php',
+        3 => BASE_URL . '/layouts/lawyer/dashboard.php',
+        4 => BASE_URL . '/layouts/client/dashboard.php',
+    ][$roleId] ?? BASE_URL . '/auth/login.php';
+}
+
 if (is_logged_in()) {
-    redirect('/dashboard/dashboard.php');
+    redirect(dashboard_for_role((int) ($_SESSION['user']['role_id'] ?? 0)));
 }
 
 $error = '';
@@ -46,16 +56,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'user_id'   => (int) $user['user_id'],
                 'full_name' => $user['full_name'],
                 'email'     => $user['email'],
+                'role_id'   => (int) $user['role_id'],
                 'role'      => $user['role_name'],
             ];
             log_audit((int) $user['user_id'], 'login', 'success');
-            redirect('/dashboard/dashboard.php');
+            redirect(dashboard_for_role((int) $user['role_id']));
         }
     }
 }
 
 $pageTitle = 'Login';
-$pageCss = '/auth/css/auth.css';
+$pageCss = BASE_URL . '/auth/css/auth.css';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="container form-narrow">
@@ -76,8 +87,8 @@ require_once __DIR__ . '/../includes/header.php';
             <button type="submit" class="btn btn-block">Login</button>
         </form>
         <div class="auth-links">
-            <a href="/auth/forgot_password.php">Forgot password?</a>
-            <a href="/auth/register.php">Create an account</a>
+            <a href="<?= e(BASE_URL) ?>/auth/forgot_password.php">Forgot password?</a>
+            <a href="<?= e(BASE_URL) ?>/auth/register.php">Create an account</a>
         </div>
     </div>
 </div>

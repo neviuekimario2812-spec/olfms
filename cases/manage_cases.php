@@ -45,7 +45,7 @@ $lawyers = $pdo->query(
 )->fetchAll();
 
 $pageTitle = $user['role'] === 'lawyer' ? 'My Assigned Cases' : 'Manage Cases';
-$pageCss = '/cases/css/cases.css';
+$pageCss = BASE_URL . '/cases/css/cases.css';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="container">
@@ -71,7 +71,7 @@ require_once __DIR__ . '/../includes/header.php';
                     <?php if ($user['role'] !== 'lawyer'): ?><td><?php echo e($c['lawyer_name'] ?? '—'); ?></td><?php endif; ?>
                     <td><span class="badge badge-<?php echo e($c['status']); ?>"><?php echo e(str_replace('_',' ',$c['status'])); ?></span></td>
                     <td><?php echo e(date('d M Y', strtotime($c['created_at']))); ?></td>
-                    <td><a href="/cases/view_case.php?id=<?php echo (int)$c['case_id']; ?>">View</a></td>
+                    <td><a href="<?= e(BASE_URL) ?>/cases/view_case.php?id=<?php echo (int)$c['case_id']; ?>">View</a></td>
                     <?php if ($user['role'] === 'manager'): ?>
                     <td>
                         <form method="post" class="assign-form">

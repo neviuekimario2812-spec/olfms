@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $pageTitle = 'Book Appointment';
-$pageCss = '/appointments/css/appointments.css';
+$pageCss = BASE_URL . '/appointments/css/appointments.css';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="container form-narrow">

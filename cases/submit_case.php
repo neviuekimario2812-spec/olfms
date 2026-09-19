@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $pageTitle = 'Submit a Case';
-$pageCss = '/cases/css/cases.css';
+$pageCss = BASE_URL . '/cases/css/cases.css';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="container form-narrow">
@@ -66,7 +66,7 @@ require_once __DIR__ . '/../includes/header.php';
         <p class="muted">Describe your legal matter. A manager will review it and assign a lawyer.</p>
 
         <?php if ($success): ?>
-            <div class="alert alert-success">Your case was submitted successfully. <a href="/cases/my_cases.php">View my cases</a></div>
+            <div class="alert alert-success">Your case was submitted successfully. <a href="<?= e(BASE_URL) ?>/cases/my_cases.php">View my cases</a></div>
         <?php else: ?>
             <?php foreach ($errors as $err): ?><div class="alert alert-error"><?php echo e($err); ?></div><?php endforeach; ?>
             <form method="post" enctype="multipart/form-data" novalidate>

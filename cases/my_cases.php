@@ -13,13 +13,13 @@ $stmt->execute([$user['user_id']]);
 $cases = $stmt->fetchAll();
 
 $pageTitle = 'My Cases';
-$pageCss = '/cases/css/cases.css';
+$pageCss = BASE_URL . '/cases/css/cases.css';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="container">
     <div class="page-head">
         <h1>My Cases</h1>
-        <a href="/cases/submit_case.php" class="btn btn-gold">+ Submit New Case</a>
+        <a href="<?= e(BASE_URL) ?>/cases/submit_case.php" class="btn btn-gold">+ Submit New Case</a>
     </div>
     <div class="table-wrap mt-2">
         <table>
@@ -32,7 +32,7 @@ require_once __DIR__ . '/../includes/header.php';
                     <td><?php echo e($c['lawyer_name'] ?? 'Not yet assigned'); ?></td>
                     <td><span class="badge badge-<?php echo e($c['status']); ?>"><?php echo e(str_replace('_',' ',$c['status'])); ?></span></td>
                     <td><?php echo e(date('d M Y', strtotime($c['created_at']))); ?></td>
-                    <td><a href="/cases/view_case.php?id=<?php echo (int)$c['case_id']; ?>">View</a></td>
+                    <td><a href="<?= e(BASE_URL) ?>/cases/view_case.php?id=<?php echo (int)$c['case_id']; ?>">View</a></td>
                 </tr>
             <?php endforeach; ?>
             <?php if (!$cases): ?><tr><td colspan="6" class="muted">You have not submitted any cases yet.</td></tr><?php endif; ?>

@@ -46,14 +46,14 @@ if ($valid && $_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $pageTitle = 'Reset Password';
-$pageCss = '/auth/css/auth.css';
+$pageCss = BASE_URL . '/auth/css/auth.css';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="container form-narrow">
     <div class="card auth-card">
         <h1>Reset your password</h1>
         <?php if ($success): ?>
-            <div class="alert alert-success">Your password has been changed. You can now <a href="/auth/login.php">log in</a>.</div>
+            <div class="alert alert-success">Your password has been changed. You can now <a href="<?= e(BASE_URL) ?>/auth/login.php">log in</a>.</div>
         <?php else: ?>
             <?php if ($error): ?><div class="alert alert-error"><?php echo e($error); ?></div><?php endif; ?>
             <?php if ($valid): ?>
@@ -71,7 +71,7 @@ require_once __DIR__ . '/../includes/header.php';
                     <button type="submit" class="btn btn-block">Change password</button>
                 </form>
             <?php else: ?>
-                <p><a href="/auth/forgot_password.php">Request a new reset link</a></p>
+                <p><a href="<?= e(BASE_URL) ?>/auth/forgot_password.php">Request a new reset link</a></p>
             <?php endif; ?>
         <?php endif; ?>
     </div>

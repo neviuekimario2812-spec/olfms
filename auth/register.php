@@ -3,7 +3,7 @@ require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 
 if (is_logged_in()) {
-    redirect('/dashboard/dashboard.php');
+    redirect(BASE_URL . '/dashboard/dashboard.php');
 }
 
 $errors = [];
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $pageTitle = 'Create an Account';
-$pageCss = '/auth/css/auth.css';
+$pageCss = BASE_URL . '/auth/css/auth.css';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="container form-narrow">
@@ -81,7 +81,7 @@ require_once __DIR__ . '/../includes/header.php';
         <p class="muted">Register to submit case requests and book appointments with a lawyer.</p>
 
         <?php if ($success): ?>
-            <div class="alert alert-success">Account created successfully. You can now <a href="/auth/login.php">log in</a>.</div>
+            <div class="alert alert-success">Account created successfully. You can now <a href="<?= e(BASE_URL) ?>/auth/login.php">log in</a>.</div>
         <?php else: ?>
             <?php foreach ($errors as $err): ?>
                 <div class="alert alert-error"><?php echo e($err); ?></div>
@@ -128,7 +128,7 @@ require_once __DIR__ . '/../includes/header.php';
                 </div>
                 <button type="submit" class="btn btn-block">Register</button>
             </form>
-            <p class="text-center mt-2">Already have an account? <a href="/auth/login.php">Log in</a></p>
+            <p class="text-center mt-2">Already have an account? <a href="<?= e(BASE_URL) ?>/auth/login.php">Log in</a></p>
         <?php endif; ?>
     </div>
 </div>
