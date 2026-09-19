@@ -7,6 +7,7 @@ $pdo = get_db();
 $user = current_user();
 $errors = [];
 $success = false;
+$generatedPassword = '';
 $old = ['full_name'=>'','email'=>'','education_level'=>'','phone'=>'','location'=>''];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
